@@ -17,7 +17,13 @@ const ProductsNavigator = createStackNavigator({
                        Colors.primary :
                       ''
     },
-    headerTintColot: Platform.OS === 'android' ?
+    headerTitleStyle: {
+      fontFamily: 'open-sans-bold'
+    },
+    headerBackTint: {
+      fontFamily: 'open-sans'
+    },
+    headerTintColor: Platform.OS === 'android' ?
                      'white' : Colors.primary
   }
 });
