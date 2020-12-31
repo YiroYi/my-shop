@@ -14,6 +14,8 @@ const ProductItem = props => {
     let TouchableCmp = TouchableNativeFeedback;
   }
 
+
+
   return (
     <View style={styles.product}>
       <TouchableCmp onPress={props.onSelect} useForeground>
@@ -22,7 +24,7 @@ const ProductItem = props => {
         </View>
         <View style={styles.details}>
           <Text style={styles.title}>{props.title} </Text>
-          <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+          <Text style={styles.price}>${props.price}</Text>
         </View>
         <View style={styles.actions}>
           {props.children}
