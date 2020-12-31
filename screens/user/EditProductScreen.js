@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, TextInput } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, TextInput, Platform } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../../components/UI/HeaderButton';
+import { useSelector } from 'react-redux';
 
 
 const EditProductScreen = props => {
-  const[title, setTitle] = useState('');
-  const[imageUrl, setImageUrl] = useState('');
+  const prodId = props.navigation.getParam('productId');
+
+  const editedProduct = useSelector(state =>
+                                    state.products.userProducts.find(
+                                      prod => prod.id === prodId
+                                    ));
+
+  const[title, setTitle] = useState(editedProduct ? editedProduct.title : '');
+  const[imageUrl, setImageUrl] = useState(editedProduct ? editedProduct.imageUrl : '');
   const[price, serPrice] = useState('');
-  const[description, setDescription] = useState('');
+  const[description, setDescription] = useState(editedProduct ? editedProduct.description : '');
+
 
   return(
     <ScrollView>
@@ -25,12 +34,13 @@ const EditProductScreen = props => {
                      value={imageUrl}
                      onChange={imageUrl => setImageUrl(imageUrl)}/>
         </View>
+        {editedProduct ? null :
         <View style={styles.formControl}>
           <Text style={styles.label}>Price</Text>
           <TextInput style={styles.input}
                      value={price}
                      onChange={price => setPrice(price)}/>
-        </View>
+        </View>}
         <View style={styles.formControl}>
           <Text style={styles.label}>Description</Text>
           <TextInput style={styles.input}
