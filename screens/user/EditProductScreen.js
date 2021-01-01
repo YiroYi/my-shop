@@ -15,16 +15,20 @@ import * as productsActions from '../../store/actions/products';
 
 const EditProductScreen = props => {
   const prodId = props.navigation.getParam('productId');
+
   const editedProduct = useSelector(state =>
     state.products.userProducts.find(prod => prod.id === prodId)
   );
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : '');
+
   const [imageUrl, setImageUrl] = useState(
     editedProduct ? editedProduct.imageUrl : ''
   );
+
   const [price, setPrice] = useState('');
+
   const [description, setDescription] = useState(
     editedProduct ? editedProduct.description : ''
   );
@@ -39,6 +43,7 @@ const EditProductScreen = props => {
         productsActions.createProduct(title, description, imageUrl, +price)
       );
     }
+    props.navigation.goBack();
   }, [dispatch, prodId, title, description, imageUrl, price]);
 
   useEffect(() => {
