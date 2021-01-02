@@ -7,13 +7,38 @@ export const deleteProduct = productId => {
 }
 
 export const createProduct = (title, description, imageUrl, price) => {
-  return { type: CREATE_PRODUCT, productData: {
-    title: title,
-    description: description,
-    imageUrl: imageUrl,
-    price: price
-  }};
-}
+  return async dispatch => {
+    const url = 'https://rn-myshop-c5afd-default-rtdb.firebaseio.com/products.json'
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title,
+        description,
+        imageUrl,
+        price
+      })
+    });
+
+    const resData = await response.json();
+
+    console.log(resData);
+
+    dispatch({
+      type: CREATE_PRODUCT,
+      productData: {
+        id: resData.name,
+        title: title,
+        description: description,
+        imageUrl: imageUrl,
+        price: price
+      }
+    });
+  };
+};
 
 export const updateProduct = (id, title, description, imageUrl) => {
   return { type: UPDATE_PRODUCT,
